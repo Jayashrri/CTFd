@@ -4,4 +4,18 @@
 	<div class="container">
 	{{ content | safe }}
 	</div>
+
+	<div>
+		<p id="countdown-para">
+			<h3 id="countdown-phase"></h3>
+			<div id="countdown">
+				<span class="hour">00</span>
+				<span class="minute">00</span>
+				<span class="second">00</span>
+			</div>
+		</p>
+
+		<link rel="stylesheet" href="{{ url_for('views.themes', path='css/countdown.css') }}">
+		<script src="{{ url_for('views.themes', path='js/countdown.js') }}"></script>
+	</div>
 {% endblock %}
