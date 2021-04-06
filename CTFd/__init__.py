@@ -13,6 +13,8 @@ from jinja2.sandbox import SandboxedEnvironment
 from werkzeug.middleware.proxy_fix import ProxyFix
 from werkzeug.utils import cached_property
 
+from flask_talisman import Talisman
+
 import CTFd.utils.config
 from CTFd import utils
 from CTFd.constants.themes import ADMIN_THEME, DEFAULT_THEME
@@ -152,6 +154,8 @@ def run_upgrade():
 
 def create_app(config="CTFd.config.Config"):
     app = CTFdFlask(__name__)
+    csp = "default-src * 'unsafe-inline'; script-src 'self' 'unsafe-inline'; img-src * 'unsafe-inline' data:;"
+    Talisman(app, content_security_policy=csp)
     with app.app_context():
         app.config.from_object(config)
 

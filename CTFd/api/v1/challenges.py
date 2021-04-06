@@ -303,6 +303,7 @@ class ChallengeList(Resource):
         if response.errors:
             return {"success": False, "errors": response.errors}, 400
 
+        # hashing spot 1
         challenge_type = data["type"]
         challenge_class = get_chal_class(challenge_type)
         challenge = challenge_class.create(request)
@@ -620,9 +621,7 @@ class ChallengeAttempt(Resource):
                 )
             log(
                 "submissions",
-                "[{date}] {name} submitted {submission} on {challenge_id} with kpm {kpm} [TOO FAST]",
-                name=user.name,
-                submission=request_data.get("submission", "").encode("utf-8"),
+                "[{date}] {name} submitted on {challenge_id} with kpm {kpm} [TOO FAST]",
                 challenge_id=challenge_id,
                 kpm=kpm,
             )
@@ -668,9 +667,7 @@ class ChallengeAttempt(Resource):
 
                 log(
                     "submissions",
-                    "[{date}] {name} submitted {submission} on {challenge_id} with kpm {kpm} [CORRECT]",
-                    name=user.name,
-                    submission=request_data.get("submission", "").encode("utf-8"),
+                    "[{date}] {name} submitted on {challenge_id} with kpm {kpm} [CORRECT]",
                     challenge_id=challenge_id,
                     kpm=kpm,
                 )
@@ -687,9 +684,7 @@ class ChallengeAttempt(Resource):
 
                 log(
                     "submissions",
-                    "[{date}] {name} submitted {submission} on {challenge_id} with kpm {kpm} [WRONG]",
-                    name=user.name,
-                    submission=request_data.get("submission", "").encode("utf-8"),
+                    "[{date}] {name} submitted on {challenge_id} with kpm {kpm} [WRONG]",
                     challenge_id=challenge_id,
                     kpm=kpm,
                 )
@@ -722,9 +717,7 @@ class ChallengeAttempt(Resource):
         else:
             log(
                 "submissions",
-                "[{date}] {name} submitted {submission} on {challenge_id} with kpm {kpm} [ALREADY SOLVED]",
-                name=user.name,
-                submission=request_data.get("submission", "").encode("utf-8"),
+                "[{date}] {name} submitted on {challenge_id} with kpm {kpm} [ALREADY SOLVED]",
                 challenge_id=challenge_id,
                 kpm=kpm,
             )

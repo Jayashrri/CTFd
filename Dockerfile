@@ -37,5 +37,5 @@ RUN chmod +x /opt/CTFd/docker-entrypoint.sh \
     && chown -R 1001:1001 /opt/CTFd /var/log/CTFd /var/uploads
 
 USER 1001
-EXPOSE 8000
+EXPOSE 8080
 ENTRYPOINT ["/opt/CTFd/docker-entrypoint.sh"]

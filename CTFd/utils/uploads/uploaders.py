@@ -1,6 +1,7 @@
 import os
 import posixpath
 import string
+import re
 from shutil import copyfileobj
 
 import boto3
@@ -75,18 +76,18 @@ class FilesystemUploader(BaseUploader):
 class S3Uploader(BaseUploader):
     def __init__(self):
         super(BaseUploader, self).__init__()
+        self.endpoint = get_app_config("AWS_S3_ENDPOINT_URL")
         self.s3 = self._get_s3_connection()
         self.bucket = get_app_config("AWS_S3_BUCKET")
 
     def _get_s3_connection(self):
         access_key = get_app_config("AWS_ACCESS_KEY_ID")
         secret_key = get_app_config("AWS_SECRET_ACCESS_KEY")
-        endpoint = get_app_config("AWS_S3_ENDPOINT_URL")
         client = boto3.client(
             "s3",
             aws_access_key_id=access_key,
             aws_secret_access_key=secret_key,
-            endpoint_url=endpoint,
+            endpoint_url=self.endpoint,
         )
         return client
 
@@ -114,16 +115,10 @@ class S3Uploader(BaseUploader):
 
     def download(self, filename):
         key = filename
-        filename = filename.split("/").pop()
-        url = self.s3.generate_presigned_url(
-            "get_object",
-            Params={
-                "Bucket": self.bucket,
-                "Key": key,
-                "ResponseContentDisposition": "attachment; filename={}".format(
-                    filename
-                ),
-            },
+        url = re.sub(
+            r"([^:])(/{2,})",
+            r"\1/",
+            "{}/{}/{}".format(self.endpoint, self.bucket, filename)
         )
         return redirect(url)
 

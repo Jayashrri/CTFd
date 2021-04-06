@@ -246,10 +246,10 @@ class Flags(db.Model):
         db.Integer, db.ForeignKey("challenges.id", ondelete="CASCADE")
     )
     type = db.Column(db.String(80))
-    content = db.Column(db.Text)
+    content = db.Column(db.String(128))
     data = db.Column(db.Text)
 
-    __mapper_args__ = {"polymorphic_on": type}
+    # __mapper_args__ = {"polymorphic_on": type}
 
     def __init__(self, *args, **kwargs):
         super(Flags, self).__init__(**kwargs)

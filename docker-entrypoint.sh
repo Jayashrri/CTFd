@@ -5,6 +5,8 @@ WORKERS=${WORKERS:-1}
 WORKER_CLASS=${WORKER_CLASS:-gevent}
 ACCESS_LOG=${ACCESS_LOG:--}
 ERROR_LOG=${ERROR_LOG:--}
+WORKER_TIMEOUT=${WORKER_TIMEOUT:-60}
+WORKER_PORT=${WORKER_PORT:-8080}
 WORKER_TEMP_DIR=${WORKER_TEMP_DIR:-/dev/shm}
 SECRET_KEY=${SECRET_KEY:-}
 DATABASE_URL=${DATABASE_URL:-}
@@ -42,8 +44,9 @@ python manage.py db upgrade
 # Start CTFd
 echo "Starting CTFd"
 exec gunicorn 'CTFd:create_app()' \
-    --bind '0.0.0.0:8000' \
+    --bind "0.0.0.0:$WORKER_PORT" \
     --workers $WORKERS \
+    --timeout $WORKER_TIMEOUT \
     --worker-tmp-dir "$WORKER_TEMP_DIR" \
     --worker-class "$WORKER_CLASS" \
     --access-logfile "$ACCESS_LOG" \
