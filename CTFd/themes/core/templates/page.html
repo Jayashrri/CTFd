@@ -5,6 +5,8 @@
 	{{ content | safe }}
 	</div>
 
+
+	</div>
 	<div>
 		<p id="countdown-para">
 			<h3 id="countdown-phase"></h3>
@@ -20,5 +22,12 @@
 
 		<link rel="stylesheet" href="{{ url_for('views.themes', path='css/countdown.css') }}">
 		<script src="{{ url_for('views.themes', path='js/countdown.js') }}"></script>
+	<div class="center">Media Partners</div>
+	</div>
+	<div class="column">
+	<img class="sponsor" src="{{ url_for('views.themes', path='img/image1.png') }}">
+	</div>
+	<div class="column">
+	<img class="sponsor" src="{{ url_for('views.themes', path='img/image2.png') }}">
 	</div>
 {% endblock %}
