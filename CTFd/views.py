@@ -168,7 +168,7 @@ def setup():
         <br>
         <br>
         <br>
-        <img class="w-100 mx-auto d-block" style="max-width: 500px;padding: 50px;padding-top: 14vh;" src="{default_ctf_banner_location}" />
+        <img class="w-100 mx-auto d-block" style="max-width: 500px;padding: 20px;" src="{default_ctf_banner_location}" />
     </div>
 </div>"""
             page.content = index
